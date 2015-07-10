@@ -424,6 +424,9 @@ FixtureBuilder.configure do |fbuilder|
     FactoryGirl.create(:milestone, :workspace => public_workspace, target_date: Date.today + 25)
     FactoryGirl.create(:milestone, :workspace => public_workspace, target_date: Date.today + 12)
 
+    Events::MilestoneCreated.by(owner).add(:milestone => default_milestone, :workspace => default_milestone.workspace)
+    Events::MilestoneUpdated.by(owner).add(:milestone => default_milestone, :workspace => default_milestone.workspace)
+
     ##Jobs
     default_job = FactoryGirl.create(:job, :workspace => public_workspace)
     fbuilder.name :default, default_job
@@ -472,6 +475,8 @@ FixtureBuilder.configure do |fbuilder|
     Events::JobSucceeded.by(owner).add(:job => default_job, :workspace => default_job.workspace, :job_result => b_result)
     Events::JobFailed.by(owner).add(:job => default_job, :workspace => default_job.workspace, :job_result => FactoryGirl.create(:job_result, :job => default_job, :succeeded => false))
     Events::JobDisabled.by(owner).add(:job => default_job, :workspace => default_job.workspace)
+    Events::JobCreated.by(owner).add(:job => default_job, :workspace => default_job.workspace)
+    Events::JobDeleted.by(owner).add(:job => default_job, :workspace => default_job.workspace)
 
     #CSV File
     csv_file = CsvFile.new({:user => the_collaborator, :workspace => public_workspace, :column_names => [:id], :types => [:integer], :delimiter => ',', :has_header => true, :to_table => 'table', :new_table => true, :contents_file_name => 'import.csv'}, :without_protection => true)

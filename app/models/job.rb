@@ -18,6 +18,8 @@ class Job < ActiveRecord::Base
   has_many :job_results, :order => :finished_at
   has_many :activities, :as => :entity
   has_many :events, :through => :activities
+  has_many :comments, :through => :events
+  has_many :most_recent_comments, :through => :events, :source => :comments, :class_name => "Comment", :order => "id DESC", :limit => 1
   has_many :job_subscriptions
   has_many :success_recipients, :through => :job_subscriptions, :source => :user, :conditions => ['job_subscriptions.condition = ?', 'success']
   has_many :failure_recipients, :through => :job_subscriptions, :source => :user, :conditions => ['job_subscriptions.condition = ?', 'failure']
@@ -35,6 +37,9 @@ class Job < ActiveRecord::Base
 
   scope :ready_to_run, -> { where(enabled: true).where(status: IDLE).where('next_run <= ?', Time.current).order(:next_run) }
   scope :awaiting_stop, -> { where(status: STOPPING).where('updated_at < ?', 1.minutes.ago) }
+
+  after_create :create_job_created_event , :if => :current_user
+  after_destroy :create_job_deleted_event , :if => :current_user
 
   def self.eager_load_associations
     [
@@ -210,4 +215,19 @@ class Job < ActiveRecord::Base
   def owner_can_edit
     errors.add(:owner, :JOB_OWNER_MEMBERSHIP_REQUIRED) unless (owner.admin? || workspace.members.include?(owner))
   end
+
+  def create_job_created_event
+    Events::JobCreated.by(current_user).add(
+        :job => self,
+        :workspace => workspace,
+    )
+  end
+
+  def create_job_deleted_event
+    Events::JobDeleted.by(current_user).add(
+        :job => self,
+        :workspace => workspace,
+    )
+  end
+
 end

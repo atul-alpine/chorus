@@ -23,7 +23,8 @@ chorus.pages.Error = chorus.pages.Bare.extend({
         e.preventDefault();
         window.history.go(-1);
     },
-    
+
+
     context: function() {
         return _.extend({
             title: this.title,

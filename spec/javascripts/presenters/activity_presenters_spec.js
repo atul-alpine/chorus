@@ -2125,6 +2125,77 @@ describe("chorus.presenters.Activity", function() {
         });
     });
 
+    context("job created event", function () {
+        beforeEach(function () {
+            this.model = backboneFixtures.activity.jobCreated();
+            this.presenter = new chorus.presenters.Activity(this.model);
+            this.actor = this.model.actor();
+            this.workspace = this.model.workspace();
+            this.job = this.model.job();
+
+            this.translation_params = {
+                actorLink: linkTo(this.actor.showUrl(), this.actor.name()),
+                workspaceLink: linkTo(this.workspace.showUrl(), this.workspace.name()),
+                jobLink: linkTo(this.job.showUrl(), this.job.name())
+            };
+        });
+
+        context("without workspace", function() {
+            it("has the right header html", function() {
+                this.presenter.options.displayStyle = ["without_workspace"];
+                expect(this.presenter.headerHtml().toString()).toMatchTranslation(
+                    "activity.header.JobCreated.without_workspace", this.translation_params
+                );
+            });
+        });
+
+        context("with workspace", function() {
+            it("has the right header html", function() {
+                this.presenter.options.displayStyle = ["default"];
+                expect(this.presenter.headerHtml().toString()).toMatchTranslation(
+                    "activity.header.JobCreated.default", this.translation_params
+                );
+            });
+        });
+
+
+    });
+
+    context("job deleted event", function () {
+        beforeEach(function () {
+            this.model = backboneFixtures.activity.jobDeleted();
+            this.presenter = new chorus.presenters.Activity(this.model);
+            this.actor = this.model.actor();
+            this.workspace = this.model.workspace();
+            this.job = this.model.job();
+
+            this.translation_params = {
+                actorLink: linkTo(this.actor.showUrl(), this.actor.name()),
+                workspaceLink: linkTo(this.workspace.showUrl(), this.workspace.name()),
+                jobLink: linkTo(this.job.showUrl(), this.job.name())
+            };
+        });
+
+        context("without workspace", function() {
+            it("has the right header html", function() {
+                this.presenter.options.displayStyle = ["without_workspace"];
+                expect(this.presenter.headerHtml().toString()).toMatchTranslation(
+                    "activity.header.JobCreated.without_workspace", this.translation_params
+                );
+            });
+        });
+
+        context("with workspace", function() {
+            it("has the right header html", function() {
+                this.presenter.options.displayStyle = ["default"];
+                expect(this.presenter.headerHtml().toString()).toMatchTranslation(
+                    "activity.header.JobCreated.default", this.translation_params
+                );
+            });
+        });
+
+    });
+
     context("dataset changed query event", function() {
         beforeEach(function() {
             this.model = backboneFixtures.activity.chorusViewChanged();
@@ -2295,4 +2366,79 @@ describe("chorus.presenters.Activity", function() {
             );
         });
     });
+
+    context("milestone created event", function () {
+        beforeEach(function () {
+            this.model = backboneFixtures.activity.milestoneCreated();
+            this.presenter = new chorus.presenters.Activity(this.model);
+            this.actor = this.model.actor();
+            this.workspace = this.model.workspace();
+            this.milestone = this.model.milestone();
+
+            this.translation_params = {
+                actorLink: linkTo(this.actor.showUrl(), this.actor.name()),
+                workspaceLink: linkTo(this.workspace.showUrl(), this.workspace.name()),
+                milestoneLink:  linkTo(this.milestone.showUrl(), this.milestone.name())
+            };
+        });
+
+        context("without workspace", function() {
+            it("has the right header html", function() {
+                this.presenter.options.displayStyle = ["without_workspace"];
+                expect(this.presenter.headerHtml().toString()).toMatchTranslation(
+                    "activity.header.MilestoneCreated.without_workspace", this.translation_paramsms
+                );
+            });
+        });
+
+        context("with workspace", function() {
+            it("has the right header html", function() {
+                this.presenter.options.displayStyle = ["default"];
+                expect(this.presenter.headerHtml().toString()).toMatchTranslation(
+                    "activity.header.MilestoneCreated.default", this.translation_params
+                );
+            });
+        });
+
+    });
+
+    context("milestone updated event", function () {
+        beforeEach(function () {
+            this.model = backboneFixtures.activity.milestoneUpdated();
+            this.presenter = new chorus.presenters.Activity(this.model);
+            this.actor = this.model.actor();
+            this.workspace = this.model.workspace();
+            this.milestone = this.model.milestone();
+            milestoneState =  "milestone.state." + this.milestone.get("state").toString;
+            console.log(this.milestone.attributes.state);
+            console.log(milestoneState);
+
+            this.translation_params = {
+                actorLink: linkTo(this.actor.showUrl(), this.actor.name()),
+                workspaceLink: linkTo(this.workspace.showUrl(), this.workspace.name()),
+                milestoneLink:  linkTo(this.milestone.showUrl(), this.milestone.name()),
+                milestoneState:  milestoneState
+            };
+        });
+
+        context("without workspace", function() {
+            it("has the right header html", function() {
+                this.presenter.options.displayStyle = ["without_workspace"];
+                expect(this.presenter.headerHtml().toString()).toMatchTranslation(
+                    "activity.header.MilestoneUpdated.without_workspace", this.translation_paramsms
+                );
+            });
+        });
+
+        context("with workspace", function() {
+            it("has the right header html", function() {
+                this.presenter.options.displayStyle = ["default"];
+                expect(this.presenter.headerHtml().toString()).toMatchTranslation(
+                    "activity.header.MilestoneUpdated.default", this.translation_params
+                );
+            });
+        });
+
+    });
+
 });

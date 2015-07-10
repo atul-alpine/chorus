@@ -10,7 +10,10 @@ module JdbcOverrides
       HDFS_VERSIONS = {
           'Cloudera CDH5' => '4.0.0',
           'Hortonworks HDP 2' => '4.0.0',
+<<<<<<< HEAD
           'IBM Big Insights 4.0' => '4.0.0',
+=======
+>>>>>>> 1c0e5125feb3bc8cb9c482acb2f6bdab133d3c2d
           'MapR4' => '0.20.2mr'
       }
 

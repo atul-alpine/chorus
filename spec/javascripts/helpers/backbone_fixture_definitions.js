@@ -72,7 +72,11 @@ window.BackboneFixtureDefinitions = {
             workspaceImportSuccess: {},
             jobSucceeded: {},
             jobFailed: {},
-            jobDisabled: {}
+            jobDisabled: {},
+            jobCreated: {},
+            jobDeleted: {},
+            milestoneCreated: {},
+            milestoneUpdated: {}
         }
     },
 
