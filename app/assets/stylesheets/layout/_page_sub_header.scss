@@ -7,16 +7,7 @@
     /* padding-top: $header-height; */
     margin-top: $header-height;
 
-/* OLDER SPECIFICATIONS= */
-/*     position: fixed; */
-/*     height: $subheader-height; */
-/*     padding-top: $header-height; */
-
-    color: $color-text3;
     background: $subheader-background-color;
-    
-    font-size:$page_header-fontsize;
-    line-height: $subheader-height;
     
     border-bottom: $border-canon;
     
@@ -26,10 +17,17 @@
         padding-right: $page-margin-right;
     }
     
-    span#sub_header_pagetitle {
+    #sub_header_pagetitle, 
+    #sub_header_pagetitle a{
         display: inline-block;
         @include ellipsis;
         /* if it gets this long, thats about long enough in the header */
-        width:93%;
+        width: 93%;
+
+        color: $color-text3;    
+        font-size: $page_header-fontsize;
+        line-height: $subheader-height;
+        
+        text-decoration: none;
     }
 }

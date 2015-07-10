@@ -15,6 +15,7 @@ chorus.dialogs.HdfsConnectionParameters = chorus.dialogs.Base.extend({
 
     setup: function () {
         this.pairs = this.model.get('connectionParameters') || [{key: '', value: ''}];
+        this.host_info = { host: '', port: 8088 };
     },
 
     save: function (e) {
@@ -22,7 +23,32 @@ chorus.dialogs.HdfsConnectionParameters = chorus.dialogs.Base.extend({
 
         this.preservePairs();
         this.model.set('connectionParameters', this.pairs);
-        this.closeModal();
+
+        if (this.validatePairs() === true) {
+            delete this.model['errors'];
+            this.clearErrors();
+            this.closeModal();
+        }
+    },
+
+    validatePairs: function() {
+        // Perform manual validation
+        var validation_errors = {};
+        for (var k in this.pairs) {
+            // Don't allow any key to be blank.
+            if (this.pairs[k].key.trim() === '') {
+                validation_errors['key_' + k] = t('validation.required', {fieldName: "Key"});
+            }
+        }
+
+        if (!_.isEmpty(validation_errors)) {
+            this.model['errors'] = validation_errors;
+            this.showErrors(this.model);
+
+            return false;
+        }
+
+        return true;
     },
 
     addPair: function (e) {
@@ -56,20 +82,20 @@ chorus.dialogs.HdfsConnectionParameters = chorus.dialogs.Base.extend({
     fetchExternalConfig: function(event) {
         event && event.preventDefault();
 
-        var host_info = {
+        this.host_info = {
             host: this.$("#configuration_host").val().trim(),
             port: this.$("#configuration_port").val().trim()
         };
-        this.fetchedParams = new chorus.collections.HadoopConfigurationParamSet(host_info);
+        this.fetchedParams = new chorus.collections.HadoopConfigurationParamSet(this.host_info);
 
         // Perform manual validation
         var validation_errors = {};
 
-        if (!host_info.host || host_info.host.length === 0) {
+        if (!this.host_info.host || this.host_info.host.length === 0) {
             validation_errors['configuration_host'] = t('validation.required', {fieldName: "Host"});
         }
 
-        if (!host_info.port || host_info.port.length === 0) {
+        if (!this.host_info.port || this.host_info.port.length === 0) {
             validation_errors['configuration_port'] = t('validation.required', {fieldName: "Port"});
         }
 
@@ -124,7 +150,9 @@ chorus.dialogs.HdfsConnectionParameters = chorus.dialogs.Base.extend({
 
     additionalContext: function () {
         return {
-            connectionParameters: this.pairs
+            connectionParameters: this.pairs,
+            configuration_host: this.host_info.host,
+            configuration_port: this.host_info.port
         };
     }
 });

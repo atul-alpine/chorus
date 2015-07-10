@@ -1,7 +1,6 @@
 #main_content {
 /*     border: $border-canon; */
     border-right: $border-canon;
-/*     @include border-radius(3px); */
 }
 
 .content_header {
@@ -44,8 +43,8 @@
 
     .menus {
         float: right;
-        text-align : right;
-        margin-top:25px;
+        text-align: right;
+        margin-top: 25px;
         height: 25px;
         @include after-clearfix;
     }
@@ -80,13 +79,13 @@
 }
 
 .tableau_icon {
-  display:inline-block;
-  vertical-align:-3px;
+  display: inline-block;
+  vertical-align: -3px;
 
-  margin-left:1px;
-  margin-right:2px;
+  margin-left: 1px;
+  margin-right: 2px;
 
   height: 16px;
-  width:16px;
+  width: 16px;
   background-image: url("/images/general/tableau_icon.png");
 }

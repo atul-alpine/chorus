@@ -77,7 +77,7 @@
         .jump_to_top {
             div.triangle_up {
                 @include triangle-glyph(up);
-                color: #000000;
+                color: $black;
 //                 font-size: 0px; */
                 margin: 3px auto 0;
             }

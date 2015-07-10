@@ -3,8 +3,8 @@ chorus.views.TagListSidebar = chorus.views.Sidebar.extend({
     templateName: 'tag_list_sidebar',
 
     events: {
-        "click .delete_tag_link" : "deleteSelectedTag",
-        "click .rename_tag_link" : "renameSelectedTag"
+        "click .delete_tag_link": "deleteSelectedTag",
+        "click .rename_tag_link": "renameSelectedTag"
     },
 
     setup: function() {

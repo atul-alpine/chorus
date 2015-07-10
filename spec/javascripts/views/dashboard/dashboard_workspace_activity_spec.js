@@ -52,8 +52,9 @@ describe("chorus.views.DashboardWorkspaceActivity", function() {
             expect(this.qtip).toExist();
 
             // Expect workspace title and summary to be present.
+            var summary_text = $(layer_ws.summary).text().substring(0, 512);
             expect(this.qtip).toContainText(layer_ws.name);
-            expect(this.qtip).toContainText(layer_ws.summary);
+            expect(this.qtip).toContainText(summary_text);
 
             // Expect workspace title to be a link to the workspace
             expect(this.qtip).toContainHtml('<a href="#workspaces/' + layer_ws.workspaceId + '>'  + layer_ws.name + '</a>');

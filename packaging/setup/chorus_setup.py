@@ -68,7 +68,7 @@ class ChorusSetup:
         self._cp_if_not_exist(os.path.join(self.release_path, "config/chorus.defaults.properties"), \
                               os.path.join(self.shared, "chorus.properties"))
         os.chmod(os.path.join(self.shared, "chorus.properties"), 0600)
-        self._cp_f(os.path.join(self.release_path, "config/chorus.defaults.properties"), \
+        self._cp_f(os.path.join(self.release_path, "config/chorus.properties.example"), \
                    os.path.join(self.shared, "chorus.properties.example"))
         self._cp_f(os.path.join(self.release_path, "config/chorus.license.default"), \
                    os.path.join(self.shared, "chorus.license.default"))
@@ -82,6 +82,8 @@ class ChorusSetup:
         self._cp_if_not_exist(os.path.join(self.release_path, "config/ldap.properties.example"), \
                               os.path.join(self.shared, "ldap.properties"))
         os.chmod(os.path.join(self.shared, "ldap.properties"), 0600)
+        self._cp_if_not_exist(os.path.join(self.release_path, "config/hadoop_config_fetch_rules.yml"), \
+                              os.path.join(self.shared, "hadoop_config_fetch_rules.yml"))
 
     def construct_data_structure(self):
         logger.debug("Construct data structure in %s" % self.options.data_path)
@@ -98,6 +100,8 @@ class ChorusSetup:
                    os.path.join(self.release_path, "config/database.yml"))
         self._ln_sf(os.path.join(self.shared, "sunspot.yml"), \
                    os.path.join(self.release_path, "config/sunspot.yml"))
+        self._ln_sf(os.path.join(self.shared, "hadoop_config_fetch_rules.yml"), \
+                    os.path.join(self.release_path, "config/hadoop_config_fetch_rules.yml"))
         self._ln_sf(os.path.join(self.shared, "ldap.properties"), \
                    os.path.join(self.release_path, "config/ldap.properties"))
         self._ln_sf(os.path.join(self.shared, "demo_data"), \
@@ -140,11 +144,12 @@ class ChorusSetup:
     def extract_postgres(self):
         logger.debug("Extract postgres database to %s", self.release_path)
         os_name, version, release = platform.linux_distribution()
+        logger.debug(platform.linux_distribution())
         if os_distribution(os_name) == "redhat"  and version.startswith("5"):
             self.executor.extract_postgres("postgres-redhat5.5-9.2.4.tar.gz")
-        elif os_distribution(os_name) == "redhat"  and version.startswith("6"):
+        elif os_distribution(os_name) == "redhat"  and (version.startswith("6") or version.startswith("7")):
             self.executor.extract_postgres("postgres-redhat6.2-9.2.4.tar.gz")
-        elif os_distribution(os_name)  == "suse" and version == "11":
+        elif os_distribution(os_name)  == "suse" and version.startswith("11"):
             self.executor.extract_postgres("postgres-suse11-9.2.4.tar.gz")
         else:
             raise Exception("postgres not installed, no version match the operation system")

@@ -4,8 +4,8 @@ chorus.dialogs.ShowImage = chorus.dialogs.Base.extend({
     persistent: true,
 
     events: {
-        "click .add_note" : "launchNotesNewDialog",
-        "click .add_comment" : "launchCommentNewDialog",
+        "click .add_note": "launchNotesNewDialog",
+        "click .add_comment": "launchCommentNewDialog",
         "click .copy": "launchCopyWorkfileDialog",
         "click .edit_tags": "startEditingTags",
         "click .rename": "launchRenameDialog",

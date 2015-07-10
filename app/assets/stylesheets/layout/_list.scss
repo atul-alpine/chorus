@@ -35,7 +35,6 @@
         }
 
         .name {
-/*             padding-top: 2px; */
             padding-bottom: 5px;
             
 			@include font-primary;
@@ -158,9 +157,7 @@
             @include secondary-text-small;
         }
 
-        .details {
-            /* font-size: 13px; */
-        }
+        .details {}
 
         .details_area {
             @include list-item-details-area;
