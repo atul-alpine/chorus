@@ -16,7 +16,8 @@
         "sourceDataset": "WorkspaceDataset",
         "schema": "Schema",
         "job": "Job",
-        "jobResult": "JobResult"
+        "jobResult": "JobResult",
+        "milestone" : "Milestone"
     };
 
     function makeAssociationMethod(associate, setupFunction) {
@@ -63,6 +64,7 @@
         newUser: makeAssociationMethod("newUser"),
         member: makeAssociationMethod("member"),
         job: makeAssociationMethod("job"),
+        milestone: makeAssociationMethod("milestone"),
 
         jobResult: makeAssociationMethod("jobResult", function (model) {
             model.set({job: this.get("job")}, {silent: true});

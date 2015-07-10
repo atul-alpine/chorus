@@ -78,6 +78,16 @@ describe Job do
     it 'makes a disabled Job by default' do
       FactoryGirl.create(:job).should_not be_enabled
     end
+
+    it 'creates activity after user creates a Job' do
+     expect do
+          Events::JobCreated.add(
+             :actor => actor,
+             :job => job,
+             :workspace => workspace
+            )
+        end
+     end
   end
 
   describe 'scheduling' do
@@ -463,4 +473,5 @@ describe Job do
       }.to change(job, :owner).from(job_owner).to(workspace.owner)
     end
   end
+
 end

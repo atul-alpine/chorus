@@ -2,6 +2,7 @@ chorus.models.Milestone = chorus.models.Base.extend({
     entityType: "Milestone",
     constructorName: "Milestone",
     urlTemplate: "workspaces/{{workspace.id}}/milestones/{{id}}",
+    showUrlTemplate: "workspaces/{{workspace.id}}/milestones",
 
     workspace: function() {
         if (!this._workspace && this.get("workspace")) {
@@ -16,5 +17,9 @@ chorus.models.Milestone = chorus.models.Base.extend({
         } else {
             this.save( {state: 'planned'}, {wait: true} );
         }
+    },
+
+    milestoneState: function () {
+      this.state();
     }
 });
